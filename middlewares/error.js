@@ -1,9 +1,14 @@
 const winston = require("winston");
+const { response } = require("../response/response");
 
-module.exports = async function (err, req, res, next) {
-  winston.error(err.message, err);
+module.exports = function (err, req, res, next) {
+  // Log full error stack for visibility
+  winston.error(err.stack || err.message, err);
 
-  res
-    .status(500)
-    .send({ apiId: req.apiId, statusCode: 500, message: "Failure", data: "Something failed. Please try again" });
+  const code = err.statusCode || 500;
+  const message = err.message || "Something failed. Please try again.";
+
+  return res.status(code).json(
+    response(code, message, null, "Failure", req.apiId)
+  );
 };

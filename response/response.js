@@ -1,9 +1,12 @@
-const winston = require("winston");
-const response = (code, msg, data, type) => {
-    winston.info(`${code}..................${msg}`)
-    return { code: code, type:type, msg:msg, data:data };
-};
-
-module.exports = {
-    response,
-};
+function response(code, message, data = null, type = "Success", apiId = null) {
+    return {
+      apiId,
+      statusCode: code,
+      message,
+      type,
+      data,
+    };
+  }
+  
+  module.exports = { response };
+  

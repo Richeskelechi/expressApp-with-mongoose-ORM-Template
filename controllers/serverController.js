@@ -1,10 +1,10 @@
 const serverService = require("../services/serverService");
-const handleAsync = require('../helpers/asyncHandlers');
 
 const serverController = {
-    getServerHealth: async (req, res) => {
-        handleAsync(serverService.getServerHealth(), res);
-    }
+  getServerHealth: async (req, res) => {
+    const result = await serverService.getServerHealth();
+    res.status(result.code).json(result);
+  }
 };
 
 module.exports = serverController;
